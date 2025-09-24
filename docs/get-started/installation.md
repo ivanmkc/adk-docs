@@ -37,6 +37,28 @@
     pip show google-adk
     ```
 
+=== "Go"
+
+    ## Create a new Go module
+    
+    If you are starting a new project, you can create a new Go module:
+    
+    ```shell
+    go mod init example.com/my-agent
+    ```
+    
+    ## Install ADK
+    
+    To add the ADK to your project, run the following command:
+    
+    ```shell
+    go get github.com/google/adk-go
+    ```
+    
+    This will add the ADK as a dependency to your `go.mod` file.
+    
+    (Optional) Verify your installation by checking your `go.mod` file for the `github.com/google/adk-go` entry.
+
 === "Java"
 
     You can either use maven or gradle to add the `google-adk` and `google-adk-dev` package.

@@ -30,6 +30,15 @@ application entirely on your machine and is recommended for internal development
     pip install google-adk
     ```
 
+=== "Go"
+
+    Create a new Go module:
+
+    ```shell
+    go mod init example.com/my-agent
+    go get github.com/google/adk-go
+    ```
+
 === "Java"
 
     To install ADK and setup the environment, proceed to the following steps.
@@ -113,6 +122,30 @@ application entirely on your machine and is recommended for internal development
 
     More instructions about this file are described in the next section on [Set up the model](#set-up-the-model).
 
+=== "Go"
+
+    You will need to create the following project structure:
+
+    ```console
+    parent_folder/
+        go-multitool-agent/
+            main.go
+            go.mod
+    ```
+
+    Create the folder `go-multitool-agent` and the `main.go` file:
+
+    ```bash
+    mkdir go-multitool-agent/
+    touch go-multitool-agent/main.go
+    ```
+
+    Copy and paste the following code into `main.go`:
+
+    ```go title="go-multitool-agent/main.go"
+    --8<-- "examples/go/snippets/get-started/go-multitool-agent/main.go"
+    ```
+
 === "Java"
 
     Java projects generally feature the following project structure:
@@ -170,6 +203,13 @@ agent will be unable to function.
         export GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
         ```
 
+        When using Go, define environment variables:
+
+        ```console title="terminal"
+        export GOOGLE_GENAI_USE_VERTEXAI=FALSE
+        export GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
+        ```
+
     3. Replace `PASTE_YOUR_ACTUAL_API_KEY_HERE` with your actual `API KEY`.
 
 === "Gemini - Google Cloud Vertex AI"
@@ -193,6 +233,14 @@ agent will be unable to function.
         export GOOGLE_CLOUD_LOCATION=LOCATION
         ```
 
+        When using Go, define environment variables:
+
+        ```console title="terminal"
+        export GOOGLE_GENAI_USE_VERTEXAI=TRUE
+        export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID
+        export GOOGLE_CLOUD_LOCATION=LOCATION
+        ```
+
 === "Gemini - Google Cloud Vertex AI with Express Mode"
     1. You can sign up for a free Google Cloud project and use Gemini for free with an eligible account!
         * Set up a
@@ -207,6 +255,13 @@ agent will be unable to function.
         ```
 
         When using Java, define environment variables:
+
+        ```console title="terminal"
+        export GOOGLE_GENAI_USE_VERTEXAI=TRUE
+        export GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_EXPRESS_MODE_API_KEY_HERE
+        ```
+
+        When using Go, define environment variables:
 
         ```console title="terminal"
         export GOOGLE_GENAI_USE_VERTEXAI=TRUE
@@ -331,6 +386,23 @@ agent will be unable to function.
 
         To learn how to use `adk api_server` for testing, refer to the
         [documentation on testing](testing.md).
+
+=== "Go"
+
+    Using the terminal, navigate to your agent project directory:
+
+    ```console
+    parent_folder/
+        go-multitool-agent/ <-- navigate to this directory
+            main.go
+            go.mod
+    ```
+
+    Run the following command to chat with your agent.
+
+    ```shell
+    go run main.go
+    ```
 
 === "Java"
 
