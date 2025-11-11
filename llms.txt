@@ -636,7 +636,66 @@ func processDocument(ctx tool.Context, args processDocumentArgs) processDocument
 
 ---
 
-## 4. API Reference
+## 4. Agent2Agent (A2A) Communication
+
+The ADK supports the Agent2Agent (A2A) protocol, enabling agents to communicate with each other over a network. This is essential for building distributed, multi-agent systems.
+
+### 4.1. Exposing an Agent via A2A
+
+You can expose an agent as a remote service by running an A2A server. The server handles incoming requests and routes them to your agent.
+
+**Example: Exposing a "Prime Checker" agent**
+This code snippet creates an agent that checks for prime numbers and exposes it on `localhost:8001`.
+
+```go
+// From: examples/go/a2a_basic/remote_a2a/check_prime_agent/main.go
+import (
+	"log"
+	"google.golang.org/adk/agent"
+	"google.golang.org/adk/server/a2a"
+)
+
+// Assume 'checkPrimeAgent' is a pre-existing agent.Agent instance.
+var checkPrimeAgent agent.Agent
+
+func main() {
+	// The A2A launcher starts a web server that exposes your agent.
+	// It automatically generates an "agent card" describing the agent.
+	if err := a2a.Launch(a2a.ServerConfig{Port: 8001}, checkPrimeAgent); err != nil {
+		log.Fatalf("Failed to launch A2A server: %v", err)
+	}
+}
+```
+
+### 4.2. Consuming a Remote Agent
+
+Your local agents can interact with remote A2A agents. You configure a "remote agent" instance by providing the URL to its agent card.
+
+**Example: Consuming the remote "Prime Checker"**
+This code creates a local agent that can use the remote prime checker. The ADK handles the network communication transparently.
+
+```go
+// From: examples/go/a2a_basic/main.go
+import (
+	"google.golang.org/adk/agent"
+	"google.golang.org/adk/agent/remoteagent"
+)
+
+func newPrimeAgent() (agent.Agent, error) {
+	// Point to the auto-generated agent card of the remote agent.
+	agentCardURL := "http://localhost:8001/.well-known/agent-card.json"
+
+	return remoteagent.New(remoteagent.Config{
+		Name:            "prime_agent",
+		Description:     "A remote agent that can check for prime numbers.",
+		AgentCardSource: &remoteagent.URLAgentCardSource{URL: agentCardURL},
+	})
+}
+```
+
+---
+
+## 5. API Reference
 
 For a complete and detailed API reference, please visit the official Go documentation.
 
